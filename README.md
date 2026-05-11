@@ -1,132 +1,304 @@
-🤖 AI Agent-Powered WhatsApp Order Automation System
+**AI-Powered WhatsApp Order Automation System**
 
-Transform unstructured WhatsApp conversations into fully automated business workflows using intelligent AI agents.
+An end-to-end AI-assisted automation platform that converts raw WhatsApp business exports into structured sales orders using:
 
-📌 Overview
+🤖 Agentic AI orchestration
+🖼️ CLIP-based image matching
+📊 Automated reporting & analytics
+📁 WhatsApp export parsing
+🧠 Smart embedding caching
+🌐 Streamlit dashboard
 
-This project is an Agentic AI system that autonomously:
+Designed for saree businesses, fashion sellers, wholesalers, and catalog-driven commerce workflows.
 
-📥 Understands WhatsApp chat data
-🖼️ Identifies products from customer images
-🧾 Creates structured orders with metadata
-📊 Generates business reports
-🤖 Uses multiple AI agents to coordinate the entire workflow
-💼 Real Business Impact
+🚀 Features
+✅ WhatsApp Export Automation
 
-Designed for:
+Process complete WhatsApp exports containing:
+- chat.txt
+- customer images
 
-Saree & boutique sellers
-WhatsApp-based businesses
-Small D2C brands
+The system automatically:
+- parses chats
+- extracts image references
+- processes customer order requests
 
-👉 Eliminates manual order tracking
-👉 Converts chat → structured data automatically
+✅ AI Agent Workflow
 
-🔥 Core Capabilities
-🤖 Multi-Agent System
+Built using:
+- CrewAI
+- Google Gemini
 
-The system uses specialized AI agents:
+A lightweight orchestration agent coordinates:
+- order parsing
+- image matching
+- reporting workflow
+- 
+✅ CLIP-Based Product Matching
 
-Agent	Responsibility
-Ingestion Agent	Loads chat & media
-Parsing Agent	Extracts structured order data
-Vision Agent	Matches product images
-Order Agent	Creates finalized orders
-Reporting Agent	Generates reports
+Uses:
+- OpenAI CLIP
+to intelligently match:
+- customer-uploaded saree images with catalog product images
 
-👉 Each agent performs a specific role, making the system modular and scalable.
+Supports:
+- visually similar products
+- color variations
+- real-world WhatsApp order screenshots
 
-🧠 AI Image Understanding
-Matches customer images with product catalog
-Uses similarity-based AI matching
-Processes only high-confidence matches
-📦 Autonomous Order Processing
+✅ Smart Embedding Cache
+
+Catalog embeddings are cached locally to:
+- reduce repeated processing
+- improve performance
+- minimize AI compute overhead
+
+✅ Streamlit Dashboard
+
+Interactive UI for:
+- uploading WhatsApp exports
+- running automation workflows
+- downloading reports
+
+Built with:
+- Streamlit
+- 
+✅ Automated Reporting
+
 Generates:
-Unique Order ID (UUID)
-Timestamp
-Product & pricing info
-Organizes images per order
-📊 Automated Reporting
-Creates structured Excel outputs:
-Orders data
-Revenue summary
-🔒 Privacy-First AI
-Runs locally using Ollama
-No dependency on external APIs
-Ensures data privacy and zero recurring cost
+- orders.xlsx
+- sales reports
+- analytics-ready structured data
+
 🏗️ Architecture
-agents/      → AI agents (decision-making layer)
-tools/       → Agent tools (execution layer)
-core/        → Business logic (processing layer)
-agent_main.py→ Agent orchestration entry point
-⚙️ Tech Stack
-Python 🐍
-CrewAI (multi-agent framework)
-Pandas (data processing)
-CLIP (image matching)
-Ollama (phi3) – lightweight local LLM
-🚀 Setup Guide
+Streamlit Dashboard
+        ↓
+AI Automation Agent
+        ↓
+Tool-Based Workflow
+        ↓
+Deterministic Python Services
+        ↓
+CLIP Image Matching
+        ↓
+Excel Reports & Analytics
+
+📂 Project Structure
+agentic-whatsapp-system/
+│
+├── agents/
+│   └── agents.py
+│
+├── tools/
+│   └── order_tools.py
+│
+├── core/
+│   ├── parser_service.py
+│   ├── vision_service.py
+│   ├── order_service.py
+│   ├── reporting_service.py
+│   ├── media_handler.py
+│   └── workspace_manager.py
+│
+├── data/
+│   ├── catalog/
+│   ├── images/
+│   └── whatsapp_export/
+│
+├── cache/
+│   └── catalog_embeddings.pkl
+│
+├── output/
+│   ├── orders.xlsx
+│   └── report.xlsx
+│
+├── app.py
+├── agent_main.py
+├── requirements.txt
+└── .env
+
+⚡ Installation
+
 1️⃣ Clone Repository
-git clone <your-repo-url>
+git clone <your_repo_url>
 cd agentic-whatsapp-system
-2️⃣ Install Dependencies
+
+2️⃣ Create Virtual Environment
+Windows
+python -m venv venv
+venv\Scripts\activate
+
+Linux / Mac
+python3 -m venv venv
+source venv/bin/activate
+
+3️⃣ Install Dependencies
 pip install -r requirements.txt
-3️⃣ Install Ollama
 
-Download from: https://ollama.com
+🔑 Environment Variables
 
-4️⃣ Pull Lightweight Model
-ollama pull phi3
-5️⃣ Start Ollama Server
-ollama serve
-▶️ Run the Agent System
-python agent_main.py
-📂 Input Format
+Create a .env file:
+GOOGLE_API_KEY=your_gemini_api_key
+
+Get Gemini API Key from:
+- Google AI Studio
+
+🖼️ Catalog Setup
+
+Place catalog product images inside:
+data/catalog/
+
+Example:
+data/catalog/
+    ├── saree_001.jpg
+    ├── saree_002.jpg
+    ├── saree_003.jpg
+
+📄 Catalog CSV Format
+
+Example:
+image,product_name,price
+saree_001.jpg,Red Banarasi Saree,2500
+saree_002.jpg,Blue Silk Saree,3200
+
+🚀 Running from Console
+
+Place WhatsApp export files inside:
+data/whatsapp_export/
+
+Example:
 data/whatsapp_export/
     ├── chat.txt
-    ├── image1.jpg
-    ├── image2.jpg
-📊 Output
-output/
-    ├── orders.xlsx
-    ├── report.xlsx
+    ├── IMG-20260401-WA001.jpg
+    ├── IMG-20260401-WA002.jpg
 
-data/order_images/
-    ├── order_<order_id>/
-🧠 How the Agent System Works
-Ingestion Agent loads WhatsApp data
-Parsing Agent extracts order details
-Vision Agent identifies products from images
-Order Agent structures the order data
-Reporting Agent generates business insights
+Run:
 
-👉 Entire workflow is autonomously coordinated by agents
+python agent_main.py
+🌐 Running Streamlit Dashboard
 
-⚡ Performance Design
-Lightweight LLM (phi3) for fast execution
-Minimal dependency on AI (logic handled in code)
-Optimized for local machines
-🔮 Future Enhancements
-📄 Invoice generation (PDF)
-📊 Interactive dashboard (Streamlit)
-☁️ Cloud deployment
-📲 WhatsApp API integration
-🧠 Improved AI matching
-💡 Why This Project is Unique
-True Agentic AI system (not just scripts)
-Real-world business automation
-Modular and scalable design
-Privacy-first architecture
-👨‍💻 Author
+Start dashboard:
+streamlit run app.py
 
-Built as a production-style AI automation system for real businesses.
+Then:
+- Upload WhatsApp export ZIP
+- Click Process Orders
+- Download generated reports
 
-⭐ Support
+🧠 How AI Workflow Works
+Step 1 — WhatsApp Parsing
 
-If you found this useful, consider giving it a ⭐ on GitHub!
+The system:
+- reads chat.txt
+- extracts image references
+- structures order data
 
-🎯 How to Pitch This Project
+Step 2 — Image Processing
 
-Use this line:
+- Customer images are:
+- automatically moved
+- encoded using CLIP embeddings
 
-“This is a multi-agent AI system that converts unstructured WhatsApp conversations into structured business workflows using local AI models.”
+Step 3 — Product Matching
+
+The system compares:
+- customer image embeddings with catalog embeddings to identify the closest product.
+
+Step 4 — Order Generation
+
+Structured orders are generated with:
+- order IDs
+- matched products
+- confidence scores
+
+Step 5 — Reporting
+
+Excel reports are automatically generated.
+
+📊 Generated Outputs
+Orders File
+output/orders.xlsx
+
+Contains:
+- order ID
+- matched product
+- confidence score
+- timestamps
+
+Analytics Report
+output/report.xlsx
+
+Contains:
+- sales summary
+- analytics-ready data
+
+⚡ Performance Optimizations
+✅ Embedding Cache
+
+Catalog embeddings are cached locally:
+cache/catalog_embeddings.pkl to avoid repeated CLIP encoding.
+
+✅ Lightweight AI Orchestration
+
+Only ONE lightweight AI agent is used.
+
+Business logic remains:
+- deterministic
+- fast
+- low-cost
+
+🛠️ Tech Stack
+Component	        Technology
+AI Orchestration	CrewAI
+LLM	Google          Gemini
+Computer Vision	    OpenAI CLIP
+UI Dashboard	    Streamlit
+Data Processing	    Pandas
+Reporting	        OpenPyXL
+ML Framework	    PyTorch
+
+🎯 Real-World Use Cases
+- Saree businesses
+- Fashion wholesalers
+-WhatsApp commerce automation
+- Catalog order management
+- AI-assisted retail workflows
+
+🚀 Future Enhancements
+- WhatsApp Business API integration
+- Real-time dashboard analytics
+- Google Sheets sync
+- Auto daily scheduling
+- Customer reply automation
+- Cloud deployment
+- Multi-user support
+
+📸 Demo Workflow
+Export WhatsApp Chat
+        ↓
+Zip Export Folder
+        ↓
+Upload to Dashboard
+        ↓
+AI Agent Processes Orders
+        ↓
+Download Excel Reports
+
+🤝 Contributing
+
+Pull requests are welcome.
+
+For major changes:
+- open an issue first
+- discuss proposed improvements
+
+📜 License
+
+MIT License
+
+⭐ If You Like This Project
+
+Please consider:
+- starring the repository
+- sharing feedback
+- contributing improvements
