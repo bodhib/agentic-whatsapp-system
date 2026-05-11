@@ -1,35 +1,63 @@
 import os
 import shutil
-import re
+
+WHATSAPP_EXPORT_FOLDER = (
+    "data/whatsapp_export"
+)
+
+IMAGES_FOLDER = "data/images"
 
 
-def extract_image_names(chat_file):
-    image_names = []
+def move_whatsapp_images():
+    """
+    Move WhatsApp images from export
+    folder to images folder.
+    """
 
-    pattern = r"(\w+\.PNG)" 
-
-    with open(chat_file, "r", encoding="utf-8") as f:
-        for line in f:
-            matches = re.findall(pattern, line)
-            image_names.extend(matches)
-
-    return list(set(image_names))  # remove duplicates
-
-
-def move_images(export_folder, destination_folder, image_names):
-    os.makedirs(destination_folder, exist_ok=True)
+    os.makedirs(
+        IMAGES_FOLDER,
+        exist_ok=True
+    )
 
     moved_files = []
 
-    for root, _, files in os.walk(export_folder):
-        for file in files:
-            if file in image_names:
-                src_path = os.path.join(root, file)
-                dest_path = os.path.join(destination_folder, file)
-                
-                if not os.path.exists(dest_path):
-                    shutil.copy(src_path, dest_path)
-                    moved_files.append(file)
+    for file_name in os.listdir(
+        WHATSAPP_EXPORT_FOLDER
+    ):
 
-    print(f"📦 Moved {len(moved_files)} images")
+        source_path = os.path.join(
+            WHATSAPP_EXPORT_FOLDER,
+            file_name
+        )
+
+        # Skip chat.txt
+        if file_name.endswith(".txt"):
+            continue
+
+        # Process only image files
+        if file_name.lower().endswith(
+            (
+                ".jpg",
+                ".jpeg",
+                ".png",
+                ".webp"
+            )
+        ):
+
+            destination_path = os.path.join(
+                IMAGES_FOLDER,
+                file_name
+            )
+
+            shutil.copy(
+                source_path,
+                destination_path
+            )
+
+            moved_files.append(file_name)
+
+    print(
+        f"✅ Moved {len(moved_files)} images"
+    )
+
     return moved_files

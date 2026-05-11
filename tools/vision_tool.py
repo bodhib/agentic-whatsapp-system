@@ -8,7 +8,7 @@ def match_product(image_name: str):
     """
     Tool to match image with catalog using AI.
     """
-    # print(match_product_service(image_name))
+    # print(f"🔍 Matching product for image: {image_name}")
     # sys.exit(0)
 
     return match_product_service(image_name)

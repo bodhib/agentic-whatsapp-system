@@ -1,0 +1,17 @@
+# =========================================
+# FILE: requirements.txt
+# =========================================
+
+crewai
+langchain
+langchain-google-genai
+streamlit
+pandas
+numpy
+openpyxl
+torch
+transformers
+pillow
+scikit-learn
+python-dotenv
+watchdog

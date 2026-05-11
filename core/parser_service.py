@@ -8,6 +8,7 @@ def parse_orders_service(chat_path: str):
     """
     Core service to parse WhatsApp chat and extract structured orders.
     """
+    
     df = parse_chat(chat_path)
     orders = extract_orders(df)
     # print(f"Extracted {len(orders)} orders from chat")

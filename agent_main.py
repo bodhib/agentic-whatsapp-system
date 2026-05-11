@@ -1,78 +1,73 @@
+# =========================================
+# FILE: agent_main.py
+# =========================================
+
 from crewai import Crew, Task
 
 from agents.agents import (
-    ingestion_agent,
-    parsing_agent,
-    vision_agent,
-    order_agent,
-    reporting_agent
+    automation_agent
 )
 
-# -------------------------------
-# TASKS (FIXED WITH expected_output)
-# -------------------------------
-
-ingest_task = Task(
-    description="Load WhatsApp export data from data/whatsapp_export and organize images",
-    expected_output="Confirmation message with number of images ingested",
-    agent=ingestion_agent
+from core.media_handler import (
+    move_whatsapp_images
 )
 
-parse_task = Task(
-    description="Parse chat.txt from data/whatsapp_export and extract structured order data including customer, message, and image",
-    expected_output="List of structured order dictionaries",
-    agent=parsing_agent
+# ----------------------------------------
+# SINGLE LIGHTWEIGHT TASK
+# ----------------------------------------
+
+workflow_task = Task(
+    description="""
+    Execute the WhatsApp order
+    automation workflow.
+
+    Steps:
+    1. Parse orders
+    2. Match products
+    3. Generate reports
+    """,
+
+    expected_output="""
+    Orders processed successfully
+    and reports generated.
+    """,
+
+    agent=automation_agent
 )
 
-vision_task = Task(
-    description="Match product images with catalog using AI and return high-confidence matches only",
-    expected_output="List of matched products with confidence scores",
-    agent=vision_agent
-)
-
-order_task = Task(
-    description="Create structured orders with order_id, timestamp, product, and price",
-    expected_output="List of finalized order records",
-    agent=order_agent
-)
-
-report_task = Task(
-    description="Generate Excel reports from processed orders",
-    expected_output="Confirmation that reports are generated successfully",
-    agent=reporting_agent
-)
-
-# -------------------------------
+# ----------------------------------------
 # CREW
-# -------------------------------
+# ----------------------------------------
 
 crew = Crew(
-    agents=[
-        ingestion_agent,
-        parsing_agent,
-        vision_agent,
-        order_agent,
-        reporting_agent
-    ],
-    tasks=[
-        ingest_task,
-        parse_task,
-        vision_task,
-        order_task,
-        report_task
-    ],
+    agents=[automation_agent],
+
+    tasks=[workflow_task],
+
     verbose=True
 )
 
-# -------------------------------
-# RUN
-# -------------------------------
 
-def run():
+def run_agents():
+
+    # -----------------------------------
+    # STEP 0: MOVE IMAGES
+    # -----------------------------------
+
+    move_whatsapp_images()
+
+    # -----------------------------------
+    # RUN CREW
+    # -----------------------------------
+
     result = crew.kickoff()
-    print("\n✅ Agent execution complete")
-    print(result)
+
+    return result
 
 
 if __name__ == "__main__":
-    run()
+
+    result = run_agents()
+
+    print("\n✅ FINAL RESULT")
+    print(result)
