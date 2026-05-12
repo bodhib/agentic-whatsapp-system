@@ -44,6 +44,9 @@ crew = Crew(
 
     tasks=[workflow_task],
 
+    memory=False,
+    cache=False,
+
     verbose=True
 )
 
