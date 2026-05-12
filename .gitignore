@@ -11,4 +11,5 @@ data/images/
 data/whatsapp_export/
 data/order_images
 
-# *.pkl
+*.zip
+*.pkl
