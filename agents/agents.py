@@ -2,6 +2,13 @@
 # FILE: agents/agents.py
 # =========================================
 
+import os
+
+os.environ["ANONYMIZED_TELEMETRY"] = "False"
+os.environ["CHROMA_TELEMETRY"] = "False"
+os.environ["CHROMA_SERVER_NOFILE"] = "65535"
+os.environ["CHROMA_DB_IMPL"] = "duckdb+parquet"
+
 from crewai import Agent
 from langchain_google_genai import (
     ChatGoogleGenerativeAI
